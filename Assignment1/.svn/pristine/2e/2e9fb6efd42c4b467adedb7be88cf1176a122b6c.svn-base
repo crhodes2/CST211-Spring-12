@@ -1,0 +1,121 @@
+#pragma once
+
+template <class T>
+class Array{
+	private:
+		T* m_array;
+		int m_length;
+		int m_start_index;
+
+	public:
+		Array();
+		Array(int length, int start_index);
+		Array(Array const& copy);
+		~Array();
+
+		Array& operator=(Array const& rhs);
+		T& operator[](int index);
+
+		int getStartIndex();
+		void setStartIndex(int start_index);
+
+		int getLength();
+		void setLength(int length);
+};
+
+template <class T>
+Array<T>::Array() : m_length(0), m_array(0), m_start_index(0){
+
+}
+
+template <class T>
+Array<T>::Array(int length, int start_index = 0) : m_length(length), m_start_index(start_index){
+	m_array = new T[length];
+}
+
+template <class T>
+Array<T>::Array(Array const& copy) : m_length(copy.m_length), m_start_index(copy.m_start_index){
+	m_array = new T[m_length];
+	for(int i=0; i<m_length; ++i){
+		m_array[i] = copy.m_array[i];
+	}
+}
+
+template <class T>
+Array<T>::~Array(){
+	delete m_array;
+}
+
+template <class T>
+Array<T>& Array<T>::operator=(Array const& rhs){}
+
+template <class T>
+T& Array<T>::operator[](int index){
+	if(index > m_start_index+m_length-1){
+		throw Exception("Index out of bounds: Index too high.");
+	}else if (index < m_start_index){
+		throw Exception("Index out of bounds: Index too low.");
+	}else{
+		return m_array[index-m_start_index];
+	}
+}
+
+template <class T>
+int Array<T>::getStartIndex(){
+	return m_start_index;
+}
+
+template <class T>
+void Array<T>::setStartIndex(int start_index){
+	m_start_index = start_index;
+}
+
+template <class T>
+int Array<T>::getLength(){
+	return m_length;
+}
+
+template <class T>
+void Array<T>::setLength(int length){
+	T* new_array = 0;
+
+	if(length < m_length){
+		new_array = new T[length];
+			
+		// copy over old data up to new length
+		for(int i=0; i<length; ++i){
+			new_array[i] = m_array[i];
+		}
+
+		// clean up
+		delete m_array;
+
+		// set array equal to the newly shrunk array
+		m_array = new_array;
+		m_length = length;
+
+	}else if(length > m_length){
+		new_array = new T[length];
+			
+		// copy over old data
+		for(int i=0; i<m_length; ++i){
+			new_array[i] = m_array[i];
+		}
+
+		// clean up
+		delete m_array;
+
+		// because we made new array larger, pad the undefined extra values
+		// in this case, just duplicating the last value of the array to fit
+		for(int i=m_length; i<length; ++i){
+			new_array[i] = new_array[m_length-1];
+		}
+
+		// set array equal to the newly enlarged array
+		m_array = new_array;
+		m_length = length;
+
+	}else{
+		// same length, do nothing
+	}
+}

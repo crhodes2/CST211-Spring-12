@@ -1,0 +1,80 @@
+#pragma once
+
+#include "Exception.h"
+#include "Array2D.h"
+#include "GameBoard.h"
+#include <Windows.h>
+#include <string>
+using std::string;
+
+class AlchemyGame{
+	private:
+		// game variables
+		GameBoard m_board;
+		int m_score;
+		int m_num_discards;
+		int m_num_symbols;
+		int m_num_colors;
+
+		// symbol/move variables
+		Symbol m_current_symbol;
+		COORD m_current_move;
+
+		// game flow related
+		void MainGameLoop();
+
+		// input output	related
+		void DisplayBoard();
+		void DisplayBoardInfo();
+		void getMove();
+
+		// game logic related
+		void CheckRowCol();
+		bool isValidMove();
+		void addToScore();
+		Symbol getRandomSymbol();
+		void ProcessMove();
+		void PlaceSymbol();
+		bool LevelComplete();
+
+		// menu related
+		static enum MENU_CHOICES{EXIT, NEW_GAME, LEVEL_SELECT};
+		int MainMenu();
+		void ProcessMenuChoice(int choice);
+		int LevelSelectMenu();
+
+		// utility/etc
+		void SetUpConsoleWindow();
+
+	public:
+		AlchemyGame();
+		AlchemyGame(AlchemyGame const& copy);
+		~AlchemyGame();
+		AlchemyGame& operator=(AlchemyGame const& rhs);
+
+		void Start();
+
+		// game settings
+		static const int BOARD_WIDTH = 9;
+		static const int BOARD_HEIGHT = 8;
+		static const COORD INITIAL_WILDCARD_COORD;
+	
+		// symbol settings
+		static const char AVAILABLE_SYMBOL_CHARS[];
+		static const Symbol SYMBOL_BOMB;
+		static const Symbol SYMBOL_WILDCARD;
+		static const Symbol SYMBOL_BLANK;
+
+		// color settings
+		static const int BOARD_BACKGROUND_COLOR = 8;
+		static const int GOLDEN_BACKGROUND_COLOR = 14;
+		static const int AVAILABLE_SYMBOL_COLORS[];
+		static const int BORDER_TEXT_COLOR = 2;
+
+		// level settings
+		static const int MAX_LEVEL = 2;
+
+		// console settings
+		static const int GAME_WIDTH = 50;
+		static const int GAME_HEIGHT = 20;
+};

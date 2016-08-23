@@ -1,0 +1,46 @@
+#pragma once
+
+#include "Exception.h"
+#include "Array2D.h"
+#include "BoardSquare.h"
+
+class AlchemyGame{
+private:
+	// game related
+	Array2D<BoardSquare> m_board;
+	int m_score;
+
+	// level related
+	int m_num_discards;
+	int m_num_symbols;
+	int m_num_colors;
+
+	int MainMenu();
+	void ProcessMenuChoice(int choice);
+	int LevelSelect();
+	void DisplayBoard();
+	void TakeMove(Symbol symbol);
+	bool isValidMove(Symbol symbol, int row, int col);
+	void MainGameLoop();
+	bool LevelComplete();
+	void HandleMove(Symbol symbol);
+	void PlaceSymbol(Symbol symbol);
+	void DiscardSymbol(Symbol symbol);
+	void ExplodeSymbolAt(int row, int col);
+
+	static const int BACKGROUND_COLOR = 0;
+	static const int GOLDEN_COLOR = 1;
+
+	static const int MAX_LEVEL = 10;
+
+	static enum MENU_CHOICES{EXIT, NEW_GAME, LEVEL_SELECT};
+
+public:
+	AlchemyGame();
+	AlchemyGame(AlchemyGame const& copy);
+	~AlchemyGame();
+
+	AlchemyGame& operator=(AlchemyGame const& rhs);
+	void Start();
+
+};

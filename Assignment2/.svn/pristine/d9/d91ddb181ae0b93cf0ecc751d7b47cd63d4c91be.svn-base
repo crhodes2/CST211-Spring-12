@@ -1,0 +1,22 @@
+#pragma once
+template <class T>
+class Array2D{
+	friend class Row;
+private:
+	Array<Row> m_array;
+	int m_row;
+	int m_col;
+public:
+	Array2D();
+	Array2D(int row, int col);
+	Array2D(Array2D const& copy);
+	~Array2D();
+
+	Array2D& operator=(Array2D const& rhs);
+	Row<T> operator[](int index);
+	int getRow();
+	void setRow(int rows);
+	int getColumn();
+	void setColumn(int columns);
+	T& Select(int row, int column);
+};

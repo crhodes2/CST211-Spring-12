@@ -1,0 +1,88 @@
+#pragma once
+#include "Array.h"
+#include "Row.h"
+
+template <class T>
+class Array2D{
+private:
+	Array<T> m_array;
+	int m_row;
+	int m_col;
+public:
+	Array2D();
+	Array2D(int row, int col);
+	Array2D(Array2D const& copy);
+	~Array2D();
+
+	Array2D& operator=(Array2D const& rhs);
+	Row<T> operator[](int index);
+	int getRow();
+	void setRow(int rows);
+	int getColumn();
+	void setColumn(int columns);
+	T& Select(int row, int column);
+};
+
+
+template <class T>
+Array2D<T>::Array2D() : m_row(0), m_col(0){
+
+}
+
+template <class T>
+Array2D<T>::Array2D(int row, int col) : m_row(row), m_col(col){
+	m_array.setLength(row * col);
+}
+
+template <class T>
+Array2D<T>::Array2D(Array2D const& copy){
+	// TODO: copy con
+}
+
+template <class T>
+Array2D<T>::~Array2D(){
+	m_row = 0;
+	m_col = 0;
+	m_array.setLength(0);
+}
+
+template <class T>
+Array2D<T>& Array2D<T>::operator=(Array2D<T> const& rhs){
+	return rhs; // FIX THIS 
+}
+
+template <class T>
+Row<T> Array2D<T>::operator[](int index){
+	return Row<T>(*this, index);
+}
+
+template <class T>
+int Array2D<T>::getRow(){
+	return m_row;
+}
+
+template <class T>
+void Array2D<T>::setRow(int rows){
+	if(rows != m_row){
+		m_array.setLength(rows * m_col);
+		m_row = rows;
+	}
+}
+
+template <class T>
+int Array2D<T>::getColumn(){
+	return m_col;
+}
+
+template <class T>
+void Array2D<T>::setColumn(int columns){
+	if(columns != m_col){
+		m_array.setLength(m_row * columns);
+		m_col = columns;
+	}
+}
+
+template <class T>
+T& Array2D<T>::Select(int row, int column){
+	return m_array[row*m_col + column];
+}

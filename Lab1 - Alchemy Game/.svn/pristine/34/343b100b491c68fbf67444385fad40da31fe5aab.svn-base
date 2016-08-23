@@ -1,0 +1,15 @@
+#pragma once
+
+class Symbol{
+private:
+	char m_character;
+	int m_color;
+public:
+	Symbol();
+	Symbol(char character, int color);
+	Symbol(Symbol const& copy);
+	~Symbol();
+
+	Symbol& operator=(Symbol const& rhs);
+	char getCharacter();
+};

@@ -1,0 +1,91 @@
+#include "FreeCellArea.h"
+
+
+FreeCellArea::FreeCellArea(void)
+	: m_numCards(0)
+{
+	m_cards.setLength(4);
+	m_cards.setStartIndex(0);
+}
+
+FreeCellArea::FreeCellArea(FreeCellArea const& copy)
+	: m_cards(copy.m_cards), m_numCards(copy.m_numCards)
+{
+
+}
+
+FreeCellArea::~FreeCellArea(void)
+{
+	Purge();
+}
+
+FreeCellArea const& FreeCellArea::operator=(FreeCellArea const& rhs)
+{
+	if(this != &rhs)
+	{
+		m_cards = rhs.m_cards;
+		m_numCards = rhs.m_numCards;
+	}
+	return *this;
+}
+
+void FreeCellArea::AddCard(Card card)
+{
+	if( !GetRemaining() )
+	{
+		throw Exception("Cannot add card to Free Cell Area. It is full.");
+	}
+
+	m_cards[m_numCards++] = card;
+}
+
+Card FreeCellArea::PopCard(unsigned index)
+{
+	if(!m_numCards)
+	{
+		throw Exception("Can't pop from empty free cell area.");
+	}
+	Card poppedCard = m_cards[index];
+	for(unsigned i = index; index < m_numCards-1; ++i)
+	{
+		m_cards[index] = m_cards[index+1];
+	}
+	m_cards[m_numCards-1] = Card(); // blank out the last card
+	m_numCards--;
+
+	return poppedCard;
+}
+
+Card FreeCellArea::PeekCard(unsigned index)
+{
+	if(!m_numCards)
+	{
+		throw Exception("Can't pop from empty free cell area.");
+	}
+	Card poppedCard = m_cards[index];
+
+	return poppedCard;
+}
+
+unsigned FreeCellArea::GetNum() const
+{
+	return m_numCards;
+}
+
+unsigned FreeCellArea::GetRemaining() const
+{
+	return 4-m_numCards;
+}
+
+void FreeCellArea::Clear()
+{
+	for(int i=0; i<4; ++i)
+	{
+		m_cards[i] = Card(); //set each card to blank card
+	}
+}
+
+void FreeCellArea::Purge()
+{
+	m_cards.Purge();
+}

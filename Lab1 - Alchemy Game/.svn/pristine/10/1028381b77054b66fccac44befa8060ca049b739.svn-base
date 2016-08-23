@@ -1,0 +1,8 @@
+#include "RandomNumberGenerator.h"
+#include <random>
+#include <time.h>
+
+int RandomNumberGenerator::generate(int lower = 0, int upper = 100){
+	srand(time(NULL));
+	return rand()%(upper-lower+1); 
+}

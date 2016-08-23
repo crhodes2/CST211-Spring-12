@@ -1,0 +1,25 @@
+#pragma once
+#include "Symbol.h"
+#include "Array2D.h"
+#include <Windows.h>
+
+class GameBoard{
+private:
+	Array2D<Symbol> m_board_symbols;
+	Array2D<bool> m_board_golden;
+public:
+	GameBoard();
+	GameBoard(GameBoard const& board);
+
+	GameBoard& operator=(GameBoard const& rhs);
+	
+	void setGolden(int row, int col, bool is_golden);
+	void setGolden(COORD coord, bool is_golden);
+	bool getGolden(int row, int col);
+	bool getGolden(COORD coord);
+	
+	void setSymbol(int row, int col, Symbol const& symbol);
+	void setSymbol(COORD coord, Symbol const& symbol);
+	Symbol const& getSymbol(int row, int col);
+	Symbol const& getSymbol(COORD coord);
+};

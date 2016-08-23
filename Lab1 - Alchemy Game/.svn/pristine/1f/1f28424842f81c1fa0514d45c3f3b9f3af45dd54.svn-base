@@ -1,0 +1,28 @@
+/***********************************************************
+* Author:		Andrew Sparkes
+* Title:		CST 211 Lab 1 - Alchemy
+* Filename:		main.cpp
+* Date Created:	4-8-12
+* Modified:		4-8-12 : basic setup and organization
+*
+* Overview:
+*	This program is the Popcap game, Alchemy, in console.
+*
+* Input:
+*	Will take input from mouse and/or keyboard.
+*
+* Output:
+*	Will output game menu/board to console screen.
+************************************************************/
+#include "AlchemyGame.h"
+#include <crtdbg.h> 
+#define _CRTDBG_MAP_ALLOC
+
+int main(){
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	AlchemyGame game;
+	game.Start();
+
+	return 0;
+}

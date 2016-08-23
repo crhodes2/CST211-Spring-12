@@ -1,0 +1,315 @@
+#include "AlchemyGame.h"
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::cin;
+#include <Windows.h>
+#include <string>
+using std::string;
+
+const int AlchemyGame::AVAILABLE_SYMBOL_COLORS[] = {0,1,2,3,4,5,6,7,9,10,12,13,15};
+const char AlchemyGame::AVAILABLE_SYMBOL_CHARS[] = {14 /*music sign*/, 11 /*male*/, 12 /*female*/, 127 /*del*/, 224 /*alpha*/, 232 /*phi*/, 228 /*sigma*/, 227 /*pi*/, 231 /*gamma*/, 230 /*mu*/, 229 /*lower case sigma*/, 236 /*infinity*/, 234 /*omega*/};
+const Symbol AlchemyGame::SYMBOL_BOMB = Symbol('X', 4 /*red*/);
+const Symbol AlchemyGame::SYMBOL_WILDCARD = Symbol(219 /*ANSI block character*/, 8 /*gray*/);
+
+AlchemyGame::AlchemyGame() : m_board(Array2D<BoardSquare>(8, 9)), m_num_discards(0), m_score(0), m_num_symbols(0), m_num_colors(0){}
+
+AlchemyGame::AlchemyGame(AlchemyGame const& copy) : m_board(copy.m_board), m_num_discards(copy.m_num_discards), m_score(copy.m_score), m_num_symbols(copy.m_num_symbols), m_num_colors(copy.m_num_colors){}
+
+AlchemyGame::~AlchemyGame(){}
+
+AlchemyGame& AlchemyGame::operator=(AlchemyGame const& rhs){
+	m_board = rhs.m_board;
+	m_num_discards = rhs.m_num_discards;
+	m_score = rhs.m_score;
+
+	return *this;
+}
+
+void AlchemyGame::Start(){
+	SetUpConsoleWindow(string("menu"));
+
+	bool error = true;
+	int menu_choice = 0;
+	
+	while(error){
+		try{
+			menu_choice = MainMenu();
+			ProcessMenuChoice(menu_choice);
+			error = false;
+		}catch(Exception e){
+			cout << e << endl;
+			system("pause");
+		}
+	}
+
+	// remove me at a later date
+	system("pause");
+}
+
+int AlchemyGame::MainMenu(){
+	int choice = -1;
+
+	system("cls");
+	cout << "Welcome to Alchemy!" << endl;
+	cout << endl;
+	cout << "1) New Game" << endl;
+	cout << "2) Level Select" << endl;
+	cout << "0) Exit" << endl;
+	cout << endl;
+	cout << "Enter Menu Choice: ";
+	cin >> choice;
+
+	bool cinIsGood = cin.good();
+	cin.clear();
+	cin.ignore(INT_MAX,'\n');
+
+	if (!cinIsGood || choice < 0 || choice > 2) {
+		throw Exception("Invalid menu choice.");
+	}
+	return choice;
+}
+
+int AlchemyGame::LevelSelect(){
+	int choice = -1;
+
+	system("cls");
+	cout << "Level Select:" << endl;
+	cout << endl;
+	cout << "Simply enter a level number below (1-" << AlchemyGame::MAX_LEVEL << ")" << endl;
+	cout << endl;
+	cout << "Level: ";
+	cin >> choice;
+
+	bool cinIsGood = cin.good();
+	cin.clear();
+	cin.ignore(INT_MAX,'\n');
+
+	if (!cinIsGood || choice < 1 || choice > AlchemyGame::MAX_LEVEL) {
+		throw Exception("Invalid menu choice.");
+	}
+	return choice;
+}
+
+void AlchemyGame::ProcessMenuChoice(int choice){
+	int level = 1; // the game level to start on
+	switch(static_cast<AlchemyGame::MENU_CHOICES>(choice)){
+		case LEVEL_SELECT:
+			level = LevelSelect();
+			if(level < 1 || level > AlchemyGame::MAX_LEVEL){
+				throw Exception("Invalid level selection");
+			}
+		case NEW_GAME:
+			// set up game, with level setting up proper # of colors/symbols
+			m_num_symbols = 4+level;
+			m_num_colors = 4+level;
+
+			MainGameLoop();
+			break;
+		case EXIT:
+			break;
+		default:
+			throw Exception("Invalid menu choice. Expecting 0, 1 or 2.");
+	}
+}
+
+void AlchemyGame::MainGameLoop(){
+	while(!LevelComplete()){
+		DisplayBoard();
+		Symbol symbol = AlchemyGame::SYMBOL_WILDCARD;
+		HandleMove(symbol);
+	}
+	
+	// Show menu: next level, main menu, exit
+	// if next level:
+		// update number of symbols/colors for next level if <=last level
+		// reset board (no golden spaces)
+		// add wildcard symbol to middle
+		// reset discard count
+		// restart maingameloop()
+	// if main menu
+		// MainMenu()
+	// if exit
+		// do nothing and let maingameloop() end
+	cout << "You win!" << endl;
+}
+
+void AlchemyGame::DisplayBoard(){
+	SetUpConsoleWindow(string("game"));
+	system("cls");
+
+	HANDLE wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	COORD offset = {1,1}; // if the board is offset from the topleft corner, input offset here
+
+	// make a 1d array representing the console buffer (to avoid updating each character and getting the screen flicker)
+	CHAR_INFO consoleBuffer[AlchemyGame::GAME_WIDTH * AlchemyGame::GAME_HEIGHT];
+
+	// first, setting all the squares to blank as default
+	for(int y = 0; y < GAME_WIDTH; ++y){
+		for(int x = 0; x < GAME_HEIGHT; ++x){
+			consoleBuffer[x + y*GAME_HEIGHT].Char.AsciiChar = ' ';
+			consoleBuffer[x + y*GAME_HEIGHT].Attributes = 0;
+		}
+	}
+
+	CHAR_INFO symbol; // temp symbol struct to make code more readable below
+	for(int r=0; r<m_board.getRow(); ++r){
+		for(int c=0; c<m_board.getColumn(); ++c){
+			// set the actual character representation of the symbol
+			symbol.Char.AsciiChar = m_board[r][c].getSymbol().getCharacter();
+			
+			// set the color of the symbol
+			symbol.Attributes = m_board[r][c].getSymbol().getColor();
+			
+			// if the piece needs to be golden background, or the value of the golden bg in, else default background color
+			if(m_board[r][c].getGolden()){
+				symbol.Attributes |= AlchemyGame::GOLDEN_BACKGROUND_COLOR << 4;
+			}else{
+				symbol.Attributes |= AlchemyGame::BOARD_BACKGROUND_COLOR << 4;
+			}
+
+			consoleBuffer[offset.X + c + (r + offset.Y)*GAME_WIDTH] = symbol;
+		}
+	}
+	
+	// setting up parameters to pass along to console functions
+	COORD charBuffSize = {AlchemyGame::GAME_WIDTH, AlchemyGame::GAME_HEIGHT};
+	COORD characterPosition = {0, 0};
+	SMALL_RECT writeArea = {0, 0, 10, 10}; //AlchemyGame::GAME_WIDTH-1, AlchemyGame::GAME_HEIGHT-1};
+
+	// output the console buffer to the screen
+	WriteConsoleOutputA(wHnd, consoleBuffer, charBuffSize, characterPosition, &writeArea);
+	
+	// set the cursor below the game board
+	//COORD cursorPos = {10,10};
+	//SetConsoleCursorPosition(wHnd, cursorPos);
+}
+
+void AlchemyGame::HandleMove(Symbol symbol){
+	// accept user input via mouse/keyboard
+	HANDLE rHnd = GetStdHandle(STD_INPUT_HANDLE);
+	DWORD numEvents = 0;
+	DWORD numEventsRead = 0;
+
+	COORD MouseClick;
+	bool foundEvent = false;
+	while(!foundEvent){
+		GetNumberOfConsoleInputEvents(rHnd, &numEvents);
+		if(numEvents != 0){
+			INPUT_RECORD *eventBuffer = new INPUT_RECORD[numEvents];
+
+			ReadConsoleInput(rHnd, eventBuffer, numEvents, &numEventsRead);
+
+			for(DWORD i=0; i < numEventsRead && !foundEvent; ++i){
+				// looping through all events that happened
+				cout << eventBuffer[i].EventType << endl;
+				if (eventBuffer[i].EventType == MOUSE_EVENT) {
+					cout << "Mouse!" << endl;
+					if(eventBuffer[i].Event.MouseEvent.dwButtonState & RIGHTMOST_BUTTON_PRESSED){
+						// user rightclicked, interpret as a discard.
+						cout << "Deteced a right click!" << endl;
+						foundEvent = true;
+					}else if(eventBuffer[i].Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED){
+						cout << "Detected a left click!" << endl;
+						MouseClick = eventBuffer[i].Event.MouseEvent.dwMousePosition;
+						foundEvent = true;
+					}else{
+						// user clicked the mouse, but it was neither left nor right click, so ignore it
+					}
+				}
+			}
+			delete [] eventBuffer;
+		}
+	}
+
+	cout << MouseClick.X << endl;
+	cout << MouseClick.Y << endl;
+
+	// if user inputs a square coord via text/mouseclick
+		// validate coords
+		// if symbol is normal symbol:
+			//PlaceSymbol(symbol, row, col);
+		// else if symbol is a bomb:
+			// ExplodeSymbolAt(row, col);
+		//else wtf
+	// if user inputs discard
+		//DiscardSymbol(symbol);
+}
+void AlchemyGame::DiscardSymbol(Symbol symbol){}
+
+void AlchemyGame::ExplodeSymbolAt(int row, int col){}
+
+void AlchemyGame::PlaceSymbol(Symbol symbol){
+	// verify valid move isValidMove(symbol, row, col)
+	// if valid
+		//m_num_discards = 0;
+		// m_board[row][col].setSymbol(symbol);
+		// m_board[row][col].setGolden(true);
+		// add score to current score
+		
+		// place the symbol on the game board
+	// if not valid
+		// display invalid move message/sound/etc
+	
+	
+
+}
+
+bool AlchemyGame::isValidMove(Symbol symbol, int row, int col){return false;}
+
+bool AlchemyGame::LevelComplete(){
+	bool level_completed = true;
+	for(int r=0; r<m_board.getRow(); ++r){
+		for(int c=0; c<m_board.getColumn(); ++c){
+			if(!m_board[r][c].getGolden()){
+				level_completed = false;
+				break;
+			}
+		}
+		if(!level_completed){
+			break;
+		}
+	}
+	return level_completed;
+}
+
+void AlchemyGame::SetUpConsoleWindow(string type){
+	HANDLE wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE rHnd = GetStdHandle(STD_INPUT_HANDLE);
+
+	SetConsoleTitle(TEXT("Lab 1 - Alchemy by Andrew Sparkes"));
+
+	int width = 0;
+	int height = 0;
+
+	if(type == "game"){
+		width = AlchemyGame::GAME_WIDTH;
+		height = AlchemyGame::GAME_HEIGHT;
+	}else if(type == "menu"){
+		width = AlchemyGame::MENU_WIDTH;
+		height = AlchemyGame::MENU_HEIGHT;
+	}
+
+	// remove me
+	DWORD ConsoleMode;
+	GetConsoleMode(rHnd, &ConsoleMode);
+	ConsoleMode |= ENABLE_MOUSE_INPUT;
+	SetConsoleMode(rHnd, ConsoleMode);
+
+
+	// set up the window size and buffer size (for no scrollbars)
+	SMALL_RECT windowSize = {0, 0, width-1, height-1};
+	COORD bufferSize = {width, height};
+
+	SetConsoleWindowInfo(wHnd, TRUE, &windowSize);
+	SetConsoleScreenBufferSize(wHnd, bufferSize);
+
+	// now, set the font size bigger so you don't need a microscope to play the game
+	CONSOLE_FONT_INFOEX CurrentFontInfoEx;
+	CurrentFontInfoEx.cbSize = sizeof(CONSOLE_FONT_INFOEX); // required so GetCurrentConsoleFontEx doesn't choke
+	GetCurrentConsoleFontEx(wHnd, false, &CurrentFontInfoEx);
+	CurrentFontInfoEx.dwFontSize.X = 12;
+	CurrentFontInfoEx.dwFontSize.Y = 16;
+	SetCurrentConsoleFontEx(wHnd, false, &CurrentFontInfoEx);
+}

@@ -1,0 +1,25 @@
+#pragma once
+
+class Array2D;
+
+template <class T>
+class Row{
+private:
+	Array2D & m_array2D;
+	int m_row;
+
+public:
+	Row(Array2D & array, int row);
+
+	T& operator[](int column);
+};
+
+template <class T>
+Row::Row(Array2D & array, int row) : m_array2D(array), m_row(row){
+
+}
+
+template <class T>
+T& Row::operator[](int column){
+	return m_array2D.Select(m_row, column);
+}

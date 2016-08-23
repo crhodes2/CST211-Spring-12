@@ -1,0 +1,68 @@
+#include "Array2D.h"
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <crtdbg.h> 
+
+#define _CRTDBG_MAP_ALLOC
+
+template <class T>
+void PrintArray(Array2D<T>& array);
+
+template <class T>
+void PrintArray(Array2D<T> const& array);
+
+int main(){
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	Array2D<int> a1(2,3);
+	a1[0][0] = 1;
+	a1[1][0] = 7;
+	a1[0][1] = 3;
+	a1[1][1] = 44;
+	a1[0][2] = 5;
+	a1[1][2] = 25;
+
+	PrintArray(a1);
+
+
+	const Array2D<int> a2(a1);
+	
+	//a2[0][0] = 10;
+
+	//cout << a2[1][2] << endl;
+	PrintArray(a2);
+
+	system("pause");
+	return 0;
+}
+
+template <class T>
+void PrintArray(Array2D<T>& array){
+	int rows = array.getRow();
+	int cols = array.getColumn();
+
+	cout << "Outputting array of dimensions " << rows << "x" << cols << endl;
+
+	for(int r=0; r<rows; ++r){
+		for(int c=0; c<cols; ++c){
+			cout << array[r][c] << "\t";
+		}
+		cout << endl;
+	}
+}
+
+template <class T>
+void PrintArray(Array2D<T> const& array){
+	int rows = array.getRow();
+	int cols = array.getColumn();
+
+	cout << "Outputting const array of dimensions " << rows << "x" << cols << endl;
+
+	for(int r=0; r<rows; ++r){
+		for(int c=0; c<cols; ++c){
+			cout << array[r][c] << "\t";
+		}
+		cout << endl;
+	}
+}

@@ -1,0 +1,132 @@
+#include <iostream>
+#include "Exception.h"
+
+/**********************************************************************	
+* ostream& operator<<(ostream& stream, Exception const& except)
+* Purpose: This function allows exceptions to be used with cout.
+*
+* Parameters: 
+*		stream: The ostream object to output the exception message to.
+*		except: The Exception to output.
+*
+* Returns: (ostream&) The stream with message appended.
+************************************************************************/
+std::ostream& operator<<(std::ostream& stream, Exception const& except){
+	return stream << except.m_msg;
+}
+
+/**********************************************************************	
+* Exception()
+* Purpose: This function is the 0-arg constructor for the Exception class.
+*
+* Parameters:
+*		None.
+*
+* Returns: None.
+************************************************************************/
+Exception::Exception() : m_msg(0){
+	const char* default_msg = "Generic Exception";
+	int len = strlen(default_msg);
+	m_msg = new char[len+1];
+	strcpy(m_msg, default_msg);
+}
+
+/**********************************************************************	
+* Exception(char* msg)
+* Purpose: This function is the 1-arg constructor for the Exception class.
+*
+* Parameters:
+*		msg: (char*) The exception message.
+*
+* Returns: None.
+************************************************************************/
+Exception::Exception(char* msg) : m_msg(0){
+	int len = strlen(msg);
+	m_msg = new char[len+1];
+	strcpy(m_msg, msg);
+}
+
+/**********************************************************************	
+* Exception(Exception const& copy)
+* Purpose: This function is the copy constructor for the Exception class.
+*
+* Parameters:
+*		copy: (Exception) The Exception to copy from.
+*
+* Returns: None.
+************************************************************************/
+Exception::Exception(Exception const& copy) : m_msg(0){
+	int len = strlen(copy.m_msg);
+	m_msg = new char[len+1];
+	strcpy(m_msg, copy.m_msg);
+}
+
+/**********************************************************************	
+* ~Exception()
+* Purpose: This function is the destructor for the Exception class. It 
+*		frees the memory allocated for the message.
+*
+* Parameters:
+*		None.
+*
+* Returns: None.
+************************************************************************/
+Exception::~Exception(){
+	delete m_msg;
+}
+
+/**********************************************************************	
+* Exception& operator=(Exception const& rhs)
+* Purpose: This function is the assignment operator for the Exception class.
+*
+* Parameters:
+*		rhs: (Exception) The right hand side of the assignment.
+*
+* Returns: (Exception&) The exception assigned to.
+************************************************************************/
+Exception& Exception::operator=(Exception const& rhs){
+	// check for self assignment
+	if(this != &rhs){
+		int len = strlen(rhs.m_msg);
+		// check if m_msg and rhs.m_msg are diff length, and if so, delete and resize
+		if(len!=strlen(m_msg)){
+			delete m_msg;
+			m_msg = new char[len+1];
+		}
+		strcpy(m_msg, rhs.m_msg);
+	}
+	return *this;
+}
+
+/**********************************************************************	
+* const char* getMessage()
+* Purpose: This function returns the message for the exception.
+*
+* Parameters:
+*		None.
+*
+* Returns: (const char*) The exception message.
+************************************************************************/
+const char* Exception::getMessage(){
+	return m_msg;
+}
+
+/**********************************************************************	
+* setMessage(char* msg)
+* Purpose: This function sets the exception message.
+*
+* Parameters:
+*		msg: (char*) The exception message.
+*
+* Returns: None.
+************************************************************************/
+void Exception::setMessage(char* msg){
+	int len = strlen(msg);
+
+	// if m_msg is uninitialized, or different length than new msg
+	if(!m_msg || len!=strlen(m_msg)){
+		delete m_msg;
+		m_msg = new char[len+1];
+	}
+	strcpy(m_msg, msg);
+}

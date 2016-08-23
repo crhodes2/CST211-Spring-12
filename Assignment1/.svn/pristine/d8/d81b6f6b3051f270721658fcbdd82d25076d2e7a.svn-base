@@ -1,0 +1,21 @@
+#include <crtdbg.h> 
+#include <iostream>
+using std::cout;
+using std::endl;
+#include "Array.h"
+#include "Exception.h"
+
+#define _CRTDBG_MAP_ALLOC
+
+int main(){
+   _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+   
+   Exception e1;
+   //Exception e2("Testing Exception 1-arg Constructor");
+
+   //cout << e1 << endl;
+   //cout << e2 << endl;
+
+   system("pause");
+   return 0;
+}

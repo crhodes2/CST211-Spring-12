@@ -1,0 +1,53 @@
+#include <iostream>
+#include "Exception.h"
+
+std::ostream& operator<<(std::ostream& stream, Exception const& except){
+	return stream << except.m_msg;
+}
+
+Exception::Exception() : m_msg(0){
+	const char* default_msg = "Generic Exception Error";
+	int len = strlen(default_msg);
+	m_msg = new char[len+1];
+	strcpy(m_msg, default_msg);
+}
+
+Exception::Exception(char* msg) : m_msg(0){
+	int len = strlen(msg);
+	m_msg = new char[len+1];
+	strcpy(m_msg, msg);
+}
+
+Exception::Exception(Exception const& copy) : m_msg(0){
+	int len = strlen(copy.m_msg);
+	m_msg = new char[len+1];
+	strcpy(m_msg, copy.m_msg);
+}
+
+Exception::~Exception(){
+	delete m_msg;
+}
+
+Exception& Exception::operator=(Exception const& rhs){
+	if(this != &rhs){
+		int len = strlen(rhs.m_msg);
+		if(len!=strlen(m_msg)){
+			m_msg = new char[len+1];
+		}
+		strcpy(m_msg, rhs.m_msg);
+	}
+	return *this;
+}
+
+const char* Exception::getMessage(){
+	return m_msg;
+}
+
+void Exception::setMessage(char* msg){
+	int len = strlen(msg);
+	if(len!=strlen(m_msg)){
+		delete m_msg;
+		m_msg = new char[len+1];
+	}
+	strcpy(m_msg, msg);
+}

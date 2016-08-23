@@ -1,0 +1,42 @@
+#include "GameBoard.h"
+#include "AlchemyGame.h"
+
+GameBoard::GameBoard(){
+	// set up blank gameboard
+	m_board_golden.setColumn(AlchemyGame::BOARD_WIDTH);
+	m_board_golden.setRow(AlchemyGame::BOARD_HEIGHT);
+	
+	m_board_symbols.setColumn(AlchemyGame::BOARD_WIDTH);
+	m_board_symbols.setRow(AlchemyGame::BOARD_HEIGHT);
+
+	for(int r=0; r<AlchemyGame::BOARD_HEIGHT; ++r){
+		for(int c=0; c<AlchemyGame::BOARD_WIDTH; ++c){
+			m_board_symbols[r][c] = AlchemyGame::SYMBOL_BLANK;
+			m_board_golden[r][c] = false;
+		}
+	}
+}
+
+GameBoard::GameBoard(GameBoard const& copy) : m_board_symbols(copy.m_board_symbols), m_board_golden(copy.m_board_golden){}
+
+GameBoard& GameBoard::operator=(GameBoard const& rhs){
+	m_board_symbols = rhs.m_board_symbols;
+	m_board_golden = rhs.m_board_golden;
+	return *this;
+}
+bool GameBoard::getGolden(int row, int col){
+	return m_board_golden[row][col];
+}
+
+void GameBoard::setGolden(int row, int col, bool is_golden){
+	m_board_golden[row][col] = is_golden;
+}
+
+
+void GameBoard::setSymbol(int row, int col, Symbol const& symbol){
+	m_board_symbols[row][col] = symbol;
+}
+
+Symbol const& GameBoard::getSymbol(int row, int col){
+	return m_board_symbols[row][col];
+}

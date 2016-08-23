@@ -1,0 +1,33 @@
+#pragma once
+
+#include "Card.h"
+#include "Array.h"
+#include "Exception.h"
+
+class FreeCellArea
+{
+	private:
+		Array<Card> m_cards;
+		unsigned m_numCards;
+
+	public:
+		friend class FreeCellGame;
+
+		FreeCellArea(void);
+		FreeCellArea(FreeCellArea const& copy);
+		~FreeCellArea(void);
+
+		FreeCellArea const& operator=(FreeCellArea const& rhs);
+
+		unsigned GetNum(void) const;
+		unsigned GetRemaining(void) const;
+
+		void AddCard(Card card);
+		Card PopCard(unsigned index);
+		Card PeekCard(unsigned index);
+
+		void Clear();
+
+		void Purge();
+};
+

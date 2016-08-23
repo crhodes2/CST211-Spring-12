@@ -1,0 +1,32 @@
+#include "BoardSquare.h"
+
+BoardSquare::BoardSquare() : m_symbol(Symbol()), m_is_golden(false){}
+
+BoardSquare::BoardSquare(Symbol const& symbol, bool is_golden) : m_symbol(symbol), m_is_golden(is_golden){}
+
+BoardSquare::BoardSquare(BoardSquare const& copy) : m_symbol(copy.m_symbol), m_is_golden(copy.m_is_golden){}
+
+BoardSquare::~BoardSquare(){}
+
+BoardSquare& BoardSquare::operator=(BoardSquare const& rhs){
+	m_symbol = rhs.m_symbol;
+	m_is_golden = rhs.m_is_golden;
+	
+	return *this;
+}
+
+void BoardSquare::setGolden(bool is_golden){
+	m_is_golden = is_golden;
+}
+
+bool BoardSquare::getGolden(){
+	return m_is_golden;
+}
+
+void BoardSquare::setSymbol(Symbol symbol){
+	m_symbol = symbol;
+}
+
+Symbol const& BoardSquare::getSymbol(){
+	return m_symbol;
+}

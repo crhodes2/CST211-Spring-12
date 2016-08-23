@@ -1,0 +1,18 @@
+﻿Build started 5/12/2012 6:42:25 PM.
+     1>Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\StaticTest\StaticTest.vcxproj" on node 4 (rebuild target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\StaticTest.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Release\StaticTest.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Release\StaticTest.lib" /NOLOGO /LTCG Release\stdafx.obj
+         StaticTest.vcxproj -> E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Release\StaticTest.lib
+       FinalizeBuildStatus:
+         Deleting file "Release\StaticTest.unsuccessfulbuild".
+         Touching "Release\StaticTest.lastbuildstate".
+     1>Done Building Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\StaticTest\StaticTest.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.60

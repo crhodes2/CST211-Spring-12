@@ -1,0 +1,84 @@
+#include "FreeCellArea.h"
+
+
+FreeCellArea::FreeCellArea(void)
+{
+	m_cards.setLength(4);
+}
+
+FreeCellArea::FreeCellArea(FreeCellArea const& copy) : m_cards(copy.m_cards)
+{
+
+}
+
+FreeCellArea::~FreeCellArea(void)
+{
+	Purge();
+}
+
+FreeCellArea const& FreeCellArea::operator=(FreeCellArea const& rhs)
+{
+	if(this != &rhs)
+	{
+		m_cards = rhs.m_cards;
+	}
+	return *this;
+}
+
+void FreeCellArea::AddCard(Card card, unsigned index)
+{
+	if( !GetRemaining() )
+	{
+		throw Exception("Cannot add card to Free Cell Area. It is full.");
+	}
+
+	if(!m_cards[index].isBlank())
+	{
+		throw Exception("Cannot add card to Free Cell Area. Position already has a card.");
+	}
+
+	m_cards[index] = card;
+}
+
+Card FreeCellArea::PopCard(unsigned index)
+{
+	if(m_cards[index].isBlank())
+	{
+		throw Exception("Cannot pop card from Free Cell Area. No card in current position.");
+	}
+
+	Card returnedCard = m_cards[index];
+	m_cards[index] = Card(); // blank card
+	return returnedCard;
+}
+
+unsigned FreeCellArea::GetLength() const
+{
+	unsigned card_count = 0;
+	for(int i=0; i<4; ++i)
+	{
+		if(!m_cards[i].isBlank())
+		{
+			++card_count;
+		}
+	}
+	return card_count;
+}
+
+unsigned FreeCellArea::GetRemaining() const
+{
+	return 4-GetLength();
+}
+
+void FreeCellArea::Clear()
+{
+	for(int i=0; i<4; ++i)
+	{
+		m_cards[i] = Card(); //set each card to blank card
+	}
+}
+
+void FreeCellArea::Purge()
+{
+	m_cards.Purge();
+}

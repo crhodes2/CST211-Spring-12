@@ -1,0 +1,22 @@
+#include "Symbol.h"
+
+Symbol::Symbol() : m_character(0), m_color(0){}
+
+Symbol::Symbol(char character, int color) : m_character(character), m_color(color){}
+
+Symbol::Symbol(Symbol const& copy) : m_character(copy.m_character), m_color(copy.m_color){}
+
+Symbol& Symbol::operator=(Symbol const& rhs){
+	m_character = rhs.m_character;
+	m_color = rhs.m_color;
+
+	return *this;
+}
+
+char Symbol::getCharacter() const{
+	return m_character;
+}
+
+int Symbol::getColor() const{
+	return m_color;
+}

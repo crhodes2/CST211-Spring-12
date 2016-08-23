@@ -1,0 +1,12 @@
+#include "Symbol.h"
+
+Symbol::Symbol(char character, int color) : m_character(character), m_color(color){}
+
+Symbol::Symbol(Symbol const& copy) : m_character(copy.m_character), m_color(copy.m_color){}
+
+Symbol::~Symbol(){}
+
+Symbol& Symbol::operator=(Symbol const& rhs){
+	m_character = rhs.m_character;
+	m_color = rhs.m_color;
+}

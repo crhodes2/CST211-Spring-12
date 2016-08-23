@@ -1,0 +1,19 @@
+#pragma once
+
+#include "Symbol.h"
+
+class BoardSquare{
+private:
+	Symbol m_symbol;
+	bool m_is_golden;
+public:
+	BoardSquare();
+	BoardSquare(Symbol const& symbol, bool is_golden);
+	BoardSquare(BoardSquare const& copy);
+
+	BoardSquare& operator=(BoardSquare const& rhs);
+	void setGolden(bool is_golden);
+	bool getGolden();
+	void setSymbol(Symbol symbol);
+	Symbol const& getSymbol();
+};

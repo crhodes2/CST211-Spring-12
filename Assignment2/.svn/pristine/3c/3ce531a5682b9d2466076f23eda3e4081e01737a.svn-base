@@ -1,0 +1,60 @@
+#pragma once
+template <class T>
+class Array2D{
+	friend class Row;
+private:
+	Array<Row> m_array;
+	int m_row;
+	int m_col;
+public:
+	Array2D();
+	Array2D(int row, int col);
+	Array2D(Array2D const& copy);
+	~Array2D();
+
+	Array2D& operator=(Array2D const& rhs);
+	Row<T> operator[](int index);
+	int getRow();
+	void setRow(int rows);
+	int getColumn();
+	void setColumn(int columns);
+	T& Select(int row, int column);
+};
+
+
+template <class T>
+Array2D<T>::Array2D() : m_row(0), m_col(0){
+
+}
+
+template <class T>
+Array2D<T>::Array2D(int row, int col) : m_row(row), m_col(col){
+	m_array.setLength(col);
+}
+
+template <class T>
+Array2D<T>::Array2D(Array2D const& copy){}
+
+template <class T>
+Array2D<T>::~Array2D(){}
+
+template <class T>
+Array2D& Array2D<T>::operator=(Array2D const& rhs){}
+
+template <class T>
+Row<T> Array2D<T>::operator[](int index){}
+
+template <class T>
+int Array2D<T>::getRow(){}
+
+template <class T>
+void Array2D<T>::setRow(int rows){}
+
+template <class T>
+int Array2D<T>::getColumn(){}
+
+template <class T>
+void Array2D<T>::setColumn(int columns){}
+
+template <class T>
+T& Array2D<T>::Select(int row, int column){}

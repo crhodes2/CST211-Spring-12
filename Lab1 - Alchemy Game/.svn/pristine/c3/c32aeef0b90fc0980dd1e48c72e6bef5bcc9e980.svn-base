@@ -1,0 +1,9 @@
+#pragma once
+
+class RandomNumberGenerator{
+	private:
+
+	public:
+		static bool seeded;
+		static int generate(int lower, int upper);
+};

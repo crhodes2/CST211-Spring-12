@@ -1,0 +1,18 @@
+#pragma once
+#include <iostream>
+
+class Exception{
+		friend std::ostream& operator<<(std::ostream& stream, Exception const& except);
+	private:
+		char* m_msg;
+	public:
+		Exception();
+		Exception(char* msg);
+		Exception(Exception const& copy);
+		~Exception();
+
+		Exception& operator=(Exception const& rhs);
+		const char* getMessage();
+		void setMessage(char* msg);
+
+};

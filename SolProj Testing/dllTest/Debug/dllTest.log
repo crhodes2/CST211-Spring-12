@@ -1,0 +1,27 @@
+﻿Build started 5/13/2012 1:44:36 AM.
+     1>Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\dllTest\dllTest.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\dllTest.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D DLLTEST_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\..\..\Cst211 Spring '12\SolProj Testing\dllTest\TestFunc.cpp"
+         TestFunc.cpp
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Debug\dllTest.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\dllTest.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Debug\dllTest.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Debug\dllTest.lib" /MACHINE:X86 /DLL Debug\dllTest.dll.embed.manifest.res
+         Debug\TestFunc.obj
+            Creating library E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Debug\dllTest.lib and object E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Debug\dllTest.exp
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\dllTest.dll.embed.manifest" /manifest Debug\dllTest.dll.intermediate.manifest
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         dllTest.vcxproj -> E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\Debug\dllTest.dll
+       FinalizeBuildStatus:
+         Deleting file "Debug\dllTest.unsuccessfulbuild".
+         Touching "Debug\dllTest.lastbuildstate".
+     1>Done Building Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\SolProj Testing\dllTest\dllTest.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.32

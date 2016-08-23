@@ -1,0 +1,113 @@
+#include "AlchemyGame.h"
+#include <iostream>
+using std::cout;
+using std::endl;
+
+AlchemyGame::AlchemyGame() : m_board(Array2D<BoardSquare>(8,9)), m_num_discards(0), m_score(0){}
+
+AlchemyGame::AlchemyGame(AlchemyGame const& copy) : m_board(copy.m_board), m_num_discards(copy.m_num_discards), m_score(copy.m_score){}
+
+AlchemyGame::~AlchemyGame(){}
+
+AlchemyGame& AlchemyGame::operator=(AlchemyGame const& rhs){
+	m_board = rhs.m_board;
+	m_num_discards = rhs.m_num_discards;
+	m_score = rhs.m_score;
+}
+
+void AlchemyGame::Start(){
+	int menu_choice = MainMenu();
+	try{
+		ProcessMenuChoice(menu_choice);
+	}catch(Exception e){
+		cout << e << endl;
+	}
+}
+
+int AlchemyGame::MainMenu(){return 0;}
+
+int AlchemyGame::LevelSelect(){return 0;}
+
+void AlchemyGame::ProcessMenuChoice(int choice){
+	int level = 1; // the game level to start on
+	switch(static_cast<AlchemyGame::MENU_CHOICES>(choice)){
+		case LEVEL_SELECT:
+			level = LevelSelect();
+		case NEW_GAME:
+			// set up game, with level setting up proper # of colors/symbols
+			m_num_symbols = 4+level;
+			m_num_colors = 4+level;
+
+			MainGameLoop();
+			break;
+		case EXIT:
+			break;
+		default:
+			throw Exception("Invalid Menu Choice");
+	}
+}
+void AlchemyGame::MainGameLoop(){
+	DisplayBoard();
+	if(LevelComplete()){
+		// Show menu: next level, main menu, exit
+		// if next level:
+			// update number of symbols/colors for next level if <=last level
+			// reset board (no golden spaces)
+			// add wildcard symbol to middle
+			// reset discard count
+			// restart maingameloop()
+		// if main menu
+			// MainMenu()
+		// if exit
+			// do nothing and let maingameloop() end
+	}else{
+		// get random symbol
+		// HandleMove(symbol)
+	}
+}
+
+void AlchemyGame::DisplayBoard(){}
+
+void AlchemyGame::HandleMove(Symbol symbol){
+	// accept user input via mouse/keyboard
+
+	// if user inputs a square coord via text/mouseclick
+		// if symbol is normal symbol:
+			//PlaceSymbol(symbol);
+		// else if symbol is a bomb:
+			// ExplodeSymbolAt(row, col);
+		//else wtf
+	// if user inputs discard
+		//DiscardSymbol(symbol);
+}
+void AlchemyGame::DiscardSymbol(Symbol symbol){}
+
+void AlchemyGame::ExplodeSymbolAt(int row, int col){}
+
+void AlchemyGame::PlaceSymbol(Symbol symbol){
+	// verify valid coords
+	//switch(action){
+	//case "discard":
+		//++m_num_discards;
+		//break;
+	//case "bomb":
+		//m_num_discards = 0;
+		// set m_board[row][col].setSymbol(blank symbol) but remember to keep it golden
+		//break;
+	//case "place":
+		// verify valid move isValidMove(symbol, row, col)
+		// if valid
+			//m_num_discards = 0;
+			// m_board[row][col].setSymbol(symbol);
+			// m_board[row][col].setGolden(true);
+			// add score to current score
+		// if not valid
+			// display invalid move message/sound/etc
+			// break;
+	//}
+	
+	
+
+}
+
+bool AlchemyGame::isValidMove(Symbol symbol, int row, int col){return false;}

@@ -1,0 +1,20 @@
+﻿Build started 5/24/2012 1:02:03 PM.
+     1>Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 4 - AVL Tree\Lab 4 - AVL Tree\Lab 4 - AVL Tree.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Lab 4 - AVL Tree.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+       Manifest:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "Debug\Lab 4 - AVL Tree.unsuccessfulbuild".
+         Touching "Debug\Lab 4 - AVL Tree.lastbuildstate".
+     1>Done Building Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 4 - AVL Tree\Lab 4 - AVL Tree\Lab 4 - AVL Tree.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.06

@@ -1,0 +1,81 @@
+/***********************************************************
+* Author:		Andrew Sparkes
+* Title:		CST 211 Lab 1 - Alchemy
+* Filename:		main.cpp
+* Date Created:	4-8-12
+* Modified:		4-8-12 : basic setup and organization
+*
+* Overview:
+*	This program is the Popcap game, Alchemy, in console.
+*
+* Input:
+*	Will take input from mouse and/or keyboard.
+*
+* Output:
+*	Will output game menu/board to console screen.
+************************************************************/
+#include "AlchemyGame.h"
+#include <crtdbg.h> 
+#define _CRTDBG_MAP_ALLOC
+
+#include <iostream>
+using std::cout;
+using std::endl;
+#include <Windows.h>
+
+
+int main(){
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	//AlchemyGame game;
+	//game.Start();
+	//return 0;
+
+	HANDLE wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_FONT_INFOEX CurrentFontInfoEx;
+	CurrentFontInfoEx.cbSize = sizeof(CONSOLE_FONT_INFOEX); // required so GetCurrentConsoleFontEx doesn't choke
+	GetCurrentConsoleFontEx(wHnd, false, &CurrentFontInfoEx);
+	CurrentFontInfoEx.dwFontSize.X = 12;
+	CurrentFontInfoEx.dwFontSize.Y = 16;
+
+
+
+	HANDLE rHnd = GetStdHandle(STD_INPUT_HANDLE);
+	DWORD numEvents = 0;
+	DWORD numEventsRead = 0;
+
+	COORD MouseClick;
+	bool foundEvent = false;
+	while(!foundEvent || true){
+		GetNumberOfConsoleInputEvents(rHnd, &numEvents);
+		if(numEvents != 0){
+			INPUT_RECORD *eventBuffer = new INPUT_RECORD[numEvents];
+
+			ReadConsoleInput(rHnd, eventBuffer, numEvents, &numEventsRead);
+
+			for(DWORD i=0; i < numEventsRead && !foundEvent; ++i){
+				// looping through all events that happened
+				//cout << eventBuffer[i].EventType << endl;
+				if (eventBuffer[i].EventType == MOUSE_EVENT) {
+					//cout << "Mouse!" << endl;
+					if(eventBuffer[i].Event.MouseEvent.dwButtonState & RIGHTMOST_BUTTON_PRESSED){
+						// user rightclicked, interpret as a discard.
+						MouseClick = eventBuffer[i].Event.MouseEvent.dwMousePosition;
+						cout << "Deteced a right click at " << MouseClick.X << "x" << MouseClick.Y << endl;
+						//foundEvent = true;
+					}else if(eventBuffer[i].Event.MouseEvent.dwButtonState & FROM_LEFT_1ST_BUTTON_PRESSED){
+						MouseClick = eventBuffer[i].Event.MouseEvent.dwMousePosition;
+						cout << "Deteced a left click at " << MouseClick.X << "x" << MouseClick.Y << endl;
+						//foundEvent = true;
+					}else{
+						// user clicked the mouse, but it was neither left nor right click, so ignore it
+					}
+				}
+			}
+			delete [] eventBuffer;
+		}
+	}
+
+	//system("pause");
+	return 0;
+}

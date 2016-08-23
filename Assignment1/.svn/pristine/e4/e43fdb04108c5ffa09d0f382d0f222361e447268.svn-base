@@ -1,0 +1,31 @@
+#include <crtdbg.h> 
+#include <iostream>
+using std::cout;
+using std::endl;
+#include "Array.h"
+#include "Exception.h"
+
+#define _CRTDBG_MAP_ALLOC
+
+int main(){
+   _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+   
+   Exception e1;
+   Exception e2("Test Error Message");
+   Exception e3;
+   e3 = e1;
+   Exception e4 = e2;
+   Exception e5(e1);
+   e5.setMessage("Something else");
+
+
+   cout << e1 << endl; // default message
+   cout << e2 << endl; // test message
+   cout << e3 << endl; // default message
+   cout << e4 << endl; // test message
+   cout << e5 << endl; // something else
+   cout << e3.getMessage() << endl; // default message
+
+   system("pause");
+   return 0;
+}

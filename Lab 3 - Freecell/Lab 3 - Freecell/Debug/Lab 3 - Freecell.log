@@ -1,0 +1,51 @@
+﻿Build started 5/15/2012 6:26:16 PM.
+     1>Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\Lab 3 - Freecell.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Lab 3 - Freecell.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\Card.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\CardCollection.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\Deck.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\FreeCellArea.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\FreeCellGame.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\GameArea.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\GameTable.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\HomeCellArea.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\PlayArea.cpp" "..\..\..\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\main.cpp"
+         Card.cpp
+         Generating Code...
+         Compiling...
+         main.cpp
+         PlayArea.cpp
+         HomeCellArea.cpp
+         GameTable.cpp
+         GameArea.cpp
+         FreeCellGame.cpp
+     1>e:\documents\oit class materials\cst211 spring '12\lab 3 - freecell\lab 3 - freecell\freecellgame.cpp(537): warning C4018: '<=' : signed/unsigned mismatch
+     1>e:\documents\oit class materials\cst211 spring '12\lab 3 - freecell\lab 3 - freecell\freecellgame.cpp(684): warning C4018: '>' : signed/unsigned mismatch
+         FreeCellArea.cpp
+         Deck.cpp
+         CardCollection.cpp
+         Generating Code...
+     1>e:\documents\oit class materials\cst211 spring '12\lab 3 - freecell\lab 3 - freecell\freecellgame.cpp(724): warning C4715: 'FreeCellGame::GetPlayAreaCardByCoord' : not all control paths return a value
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 3 - Freecell\Debug\Lab 3 - Freecell.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Lab 3 - Freecell.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 3 - Freecell\Debug\Lab 3 - Freecell.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 3 - Freecell\Debug\Lab 3 - Freecell.lib" /MACHINE:X86 "Debug\Lab 3 - Freecell.exe.embed.manifest.res"
+         Debug\Card.obj
+         Debug\CardCollection.obj
+         Debug\Deck.obj
+         Debug\Exception.obj
+         Debug\FreeCellArea.obj
+         Debug\FreeCellGame.obj
+         Debug\GameArea.obj
+         Debug\GameTable.obj
+         Debug\HomeCellArea.obj
+         Debug\main.obj
+         Debug\PlayArea.obj
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Lab 3 - Freecell.exe.embed.manifest" /manifest "Debug\Lab 3 - Freecell.exe.intermediate.manifest"
+         All outputs are up-to-date.
+       LinkEmbedManifest:
+         All outputs are up-to-date.
+         Lab 3 - Freecell.vcxproj -> E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 3 - Freecell\Debug\Lab 3 - Freecell.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\Lab 3 - Freecell.unsuccessfulbuild".
+         Touching "Debug\Lab 3 - Freecell.lastbuildstate".
+     1>Done Building Project "E:\Documents\OIT Class Materials\Cst211 Spring '12\Lab 3 - Freecell\Lab 3 - Freecell\Lab 3 - Freecell.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:11.52
